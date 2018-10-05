@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import logo from './logo.svg';
 import './App.css';
-
+import Todo from './Todo';
 
 
 class App extends Component {
@@ -17,8 +17,7 @@ class App extends Component {
       logOut,
       loggedIn,
       deleteTask,
-      editTask
-      
+      editTask    
     });  
   }
 
@@ -27,6 +26,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+          <Todo postTask={postTask} getTasks={getTasks} editTask={editTask}/>
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
@@ -41,7 +41,7 @@ class App extends Component {
         </header>
       </div>
     );
-  }
+  }r
 }
 
 
@@ -87,15 +87,17 @@ const loggedIn = async () => axios.get('http://localhost:3000/api/loggedin')
 const getTasks = async () => axios.get('http://localhost:3000/api/tasks')
   .then(function (response) {
     console.log(response);
+    return response.data
   })
   .catch(function (error) {
     console.log(error);
   });
 
 
-const postTask = async () => axios.post('http://localhost:3000/api/tasks/create',  { title:'a', description:'b', doneyet:false})
+const postTask = async () => axios.post('http://localhost:3000/api/tasks/create',  { title:'a', description:Date.now(), doneyet:false})
   .then(function (response) {
     console.log(response);
+    return response;
   })
   .catch(function (error) {
     console.log(error);
@@ -111,7 +113,7 @@ const deleteTask = async () => axios.post(`http://localhost:3000/api/tasks/delet
   });
 
 
-const editTask = async () => axios.post(`http://localhost:3000/api/tasks/edit/${'5bb6f25729c4c824c1d5dcdc'}`,  { title:'d', description:Date.now(), doneyet:Math.random()})
+const editTask = async () => axios.post(`http://localhost:3000/api/tasks/edit/${'5bb7108527a890250ee288d1'}`,  { title:'d', description:Date.now(), doneyet:Math.random()})
   .then(function (response) {
     console.log(response);
   })
