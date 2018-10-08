@@ -51,14 +51,31 @@ class App extends Component {
         let t = await deleteTask(task)
         this.setState({tasks: this.state.tasks.filter(t => t._id !== task.id)})
     }
-    editTask = async (t, val) => {
-        console.log(t, val)
+    editTask = async (newTask, val) => {
+        console.log(newTask, val)
         
-        let task = await editTask(t.id, {description:val, doneyet:t.doneyet})
+        let task = await editTask(newTask.id, {description:val, doneyet:newTask.doneyet})
         //this.setState({ tasks: [...this.state.tasks, task.data] })                
+        console.log(task, newTask)
 
-        //console.log(task,t)
-        this.setState({tasks: this.state.tasks.filter(t => t._id !== task.id)})
+        const updatedTasks = this.state.tasks.map((obj, index) => {
+          //return index === props.index ? props : obj;
+          console.log(obj)
+          if( obj._id !== task._id ){
+            return obj 
+          } else {
+            obj.doneyet = !obj.doneyet
+            return obj
+          }
+        });
+
+        this.setState({tasks:updatedTasks})
+
+        /*this.setState({tasks: this.state.tasks.filter(t => { 
+            console.log(t, task)
+            return t._id !== task._id
+          }
+          )})*/
     }
 
     logIn = async() => {
@@ -219,7 +236,7 @@ const deleteTask = async (task) => axios.post(`http://localhost:3000/api/tasks/d
 const editTask = async(id, task) => axios.post(`http://localhost:3000/api/tasks/edit/${id}`,  task)
   .then(function (response) {
     //console.log(response);
-    return response;
+    return response.data;
     
   })
   .catch(function (error) {
