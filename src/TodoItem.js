@@ -10,56 +10,14 @@ class TodoItem extends Component {
             isEdit: false,
         }
     }
-    /*
-    handleEditTitle = () => {
-        this.setState({
-            isEdit: true
-        })
-    }
 
-    handleSubmitTitle = () => {
-        this.props.updateItem(
-            this.props.token, 
-            {
-                _id: this.props.id,
-                title: this.input.value.trim()
-            }
-        )
-
-        this.setState({
-            isEdit: false
-        })
-    }
-    */
-
-     edit = async (e) => {
-        ////console.log('this id',e, this)
-        
-        //let b = await this.props.editTask(this.props.id)
-        ////console.log('b', b)
-        //this.setState({ tasks: [...this.state.tasks, b.data] })                
-
+    edit = async (e) => {       
         this.setState({
             isEdit: !this.state.isEdit
         })
     }
-
-
     handleCheck = (e) => {
-        //let val = this.input.value    
-        console.log(this)
-        console.log(this.props)
-        let task = {
-            id: this.props.id,
-            description: this.props.title,
-            doneyet : !this.props.doneyet
-        }
-
-        console.log(task)
-        //task.doneyet = !task.doneyet
-        this.props.editTask(task)
-
-
+        this.props.editTask({id: this.props.id, doneyet : !this.props.doneyet} )
     }
 
     handleDelete = (e) => {
@@ -67,7 +25,6 @@ class TodoItem extends Component {
     }
     handleEdit = (e) => {
         let val = this.input.value
-        //console.log(this.props, val)
         this.props.editTask(this.props, val)
         this.setState({
             isEdit: !this.state.isEdit
@@ -75,8 +32,6 @@ class TodoItem extends Component {
     }
 
     renderTitle = () => {
-    //console.log(this)
-    
         return this.state.isEdit
             ?   <input
                     ref={input => this.input = input}

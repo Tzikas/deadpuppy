@@ -14,7 +14,6 @@ class Todo extends Component {
     }
     
     render() {
-        //console.log(this.props)    
         let items = this.props.tasks.map(item => (
                 <div key={item._id}>
                     <TodoItem 
@@ -30,9 +29,6 @@ class Todo extends Component {
         return (
             <div>
                 <h1 className="site-header">Todos</h1>
-                <p className="app-description">
-                    sup
-                </p>
                 <div className="row">
                     <div>
                     <form onSubmit={this.handleSubmit}>
@@ -50,6 +46,9 @@ class Todo extends Component {
               <br />
               <button onClick ={this.props.myTasks}>My Tasks</button> 
               <button onClick ={this.props.getTasks}>All Tasks</button> 
+                <p className="app-description">
+                    Double click to Edit.  
+                </p>
 
                     <div className="todo-container">
                         {items}

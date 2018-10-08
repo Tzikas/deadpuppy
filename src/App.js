@@ -5,10 +5,21 @@ import './App.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import Todo from './Todo';
 import Loader from 'react-loader-spinner'
+import {
+  signUp,
+  logIn,
+  logOut,
+  loggedIn
+} from './authActions'
+import {
+  getTasks,
+  postTask,
+  deleteTask,
+  editTask
+} from './todoActions'
 
 
-
-class App extends Component {
+export default class App extends Component {
 
     constructor() {
         super();
@@ -28,26 +39,12 @@ class App extends Component {
         let tasks =  await getTasks();
         this.setState({tasks:tasks})
         this.loggedIn()
-        setTimeout(() => this.setState({ loading: false }), 1500); 
-
-
-        Object.assign(window, {
-          getTasks,
-          postTask,
-          logIn,
-          signUp,
-          logOut,
-          loggedIn,
-          deleteTask,
-          editTask,
-        }); 
+        setTimeout(() => this.setState({ loading: false }), 1500); //Just to see the loading icon
     }
     postTask = async (value) => {
         value.doneyet = false;
         let task = await postTask(value)
-        console.log(task);
-
-        this.setState({ tasks: [...this.state.tasks, task.data] })                
+        this.setState({ tasks: [...this.state.tasks, task] })                
     }
     deleteTask = async (task) => {
         let t = await deleteTask(task)
@@ -66,7 +63,6 @@ class App extends Component {
             return obj
           }
         });
-
         this.setState({tasks:updatedTasks})
     }
     myTasks = async() => {
@@ -77,20 +73,13 @@ class App extends Component {
         this.setState({tasks:tasks})
         
     }
-
     logIn = async() => {
       let result = await logIn({ username:this.state.name, password:this.state.pass })
-      result.error ? this.setState({status: result } ) :  this.setState({user: result, loggedIn:true, status:{ error:false, message:'' } }) 
-      
-   
+      result.error ? this.setState({status: result } ) :  this.setState({user: result, loggedIn:true, status:{ error:false, message:'' } })    
     }
 
     signUp = async() => {
-      //console.log(this.state)
       let result = await signUp({ username:this.state.name, password:this.state.pass })
-      
-      //console.log(result)
-
       result.error ? this.setState({status: result } ) :  this.setState({user: result, loggedIn:true, status:{ error:false, message:'' } }) 
     }
 
@@ -102,31 +91,23 @@ class App extends Component {
       let result = await loggedIn()
       result.error ? this.setState({status: result } ) :  this.setState({user: result, loggedIn:true, status:{ error:false, message:'' } }) 
       
-     // this.setState({loggedIn:true, user:user})
     }
 
-    render() {
 
-    
-    
+    render() {
        return (
         <div className="App">
-
             {this.state.loading ? 
-          
             <div className='sweet-loading'>
               <Loader type="Plane" color="#00BFFF" height="100" width="100"/>         
             </div>
              : 
-
           <div className="App-content">
             {this.state.status.error ? <p> { this.state.status.message }</p> : ''}
             {this.state.loggedIn && !this.state.status.error ? 
               <span>
               <p id="user">Welcome {this.state.user.username} !</p>
               <button id="logout" onClick={this.logOut}>LogOut</button>
-
-              
               <Todo 
                 tasks={this.state.tasks}
                 postTask={this.postTask} 
@@ -164,95 +145,15 @@ class App extends Component {
   }
 
 
-axios.defaults.withCredentials = true;  // :-/
-
-const signUp = async (user) => axios.post('http://localhost:3000/api/signup',  user)
-  .then(function (response) {
-    return response.data    
-  })
-  .catch(function (error) {
-    return {error:true, message: error.response.data.message}    
-      
-  });
-
-const logIn = async (user) => axios.post('http://localhost:3000/api/login',  user)
-  .then(function (response) {
-    return response.data
-  })
-  .catch(function (error) {
-    return {error:true, message: error.response.data.message}
-    
-  });
-
-const logOut = async () => axios.post('http://localhost:3000/api/logOut')
-  .then(function (response) {
-    //console.log(response);
-  })
-  .catch(function (error) {
-    //console.log(error);
-  });
-const loggedIn = async () => axios.get('http://localhost:3000/api/loggedin')
-  .then(function (response) {
-    return response.data
-  })
-  .catch(function (error) {
-    return {error:true, message: error.response.data.message}
-    
-   // return false
-  });
+Object.assign(window, { //Lets actions be called from console 
+  getTasks,
+  postTask,
+  logIn,
+  signUp,
+  logOut,
+  loggedIn,
+  deleteTask,
+  editTask,
+}); 
 
 
-
-
-
-
-
-const getTasks = async () => axios.get('http://localhost:3000/api/tasks')
-  .then(function (response) {
-    //console.log(response.data)
-    return response.data
-  })
-  .catch(function (error) {
-    //console.log(error);
-  });
-
-
-const postTask = async (task) => axios.post('http://localhost:3000/api/tasks/create',  task)
-  .then(function (response) {
-    ////console.log(response);
-    return response;
-  })
-  .catch(function (error) {
-    //console.log(error);
-  });
-
-
-const deleteTask = async (task) => axios.post(`http://localhost:3000/api/tasks/delete/${task.id}`)
-  .then(function (response) {
-    //console.log(response);
-  })
-  .catch(function (error) {
-    //console.log(error);
-  });
-
-
-const editTask = async(id, task) => axios.post(`http://localhost:3000/api/tasks/edit/${id}`,  task)
-  .then(function (response) {
-    //console.log(response);
-    return response.data;
-    
-  })
-  .catch(function (error) {
-    //console.log(error);
-  });
-
-
-
-
-
-//const logIn = async() => await fetch('http://localhost:3000/api/tasks').then(response => response.json());
-
-
-
-
-export default App;

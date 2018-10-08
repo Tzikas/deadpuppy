@@ -11,7 +11,7 @@ p{
 }
 
 button{
-   background-color: #4CAF50; /* Green */
+   background-color: #237d27; /*#4CAF50;  Green */
     border: none;
     color: white;
     padding: 10px 26px;
@@ -28,36 +28,6 @@ button{
   top:2px;
   right:2px;
 }
-/*.
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-*/
 
 #user{
     font-family: 'Quicksand', sans-serif;

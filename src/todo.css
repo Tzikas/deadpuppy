@@ -17,12 +17,10 @@
 }
 
 .todo-container {
-    margin-top: 50px;;
 }
 
 .app-description {
     margin-top: -14px;
-    margin-bottom: 20px;
     font-family: 'Quicksand', sans-serif;
     font-style: italic;
     font-size: 15px;
