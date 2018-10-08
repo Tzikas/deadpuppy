@@ -39,52 +39,50 @@ class App extends Component {
           logOut,
           loggedIn,
           deleteTask,
-          editTask    
+          editTask,
         }); 
     }
     postTask = async (value) => {
         value.doneyet = false;
         let task = await postTask(value)
+        console.log(task);
+
         this.setState({ tasks: [...this.state.tasks, task.data] })                
     }
     deleteTask = async (task) => {
         let t = await deleteTask(task)
         this.setState({tasks: this.state.tasks.filter(t => t._id !== task.id)})
     }
-    editTask = async (newTask, val) => {
-        console.log(newTask, val)
-        
+    editTask = async (newTask, val) => {        
         let task = await editTask(newTask.id, {description:val, doneyet:newTask.doneyet})
-        //this.setState({ tasks: [...this.state.tasks, task.data] })                
-        console.log(task, newTask)
-
         const updatedTasks = this.state.tasks.map((obj, index) => {
-          //return index === props.index ? props : obj;
-          console.log(obj)
-          if( obj._id !== task._id ){
+           if( obj._id !== task._id ){
             return obj 
           } else {
-            obj.doneyet = !obj.doneyet
+            obj.doneyet = newTask.doneyet
+            if(val){
+              obj.description = val;
+            }
             return obj
           }
         });
 
         this.setState({tasks:updatedTasks})
-
-        /*this.setState({tasks: this.state.tasks.filter(t => { 
-            console.log(t, task)
-            return t._id !== task._id
-          }
-          )})*/
+    }
+    myTasks = async() => {
+        this.setState({tasks: this.state.tasks.filter(t => t.owner === this.state.user._id)})      
+    }
+    getTasks = async() => {
+        let tasks =  await getTasks();
+        this.setState({tasks:tasks})
+        
     }
 
     logIn = async() => {
       let result = await logIn({ username:this.state.name, password:this.state.pass })
-      //console.log(result)
       result.error ? this.setState({status: result } ) :  this.setState({user: result, loggedIn:true, status:{ error:false, message:'' } }) 
       
-      //this.setState({user: user, loggedIn:true})
-      
+   
     }
 
     signUp = async() => {
@@ -125,13 +123,18 @@ class App extends Component {
             {this.state.status.error ? <p> { this.state.status.message }</p> : ''}
             {this.state.loggedIn && !this.state.status.error ? 
               <span>
-              <div>Welcome {this.state.user.username} !</div>
-              <button onClick={this.logOut}>LogOut</button>
+              <p id="user">Welcome {this.state.user.username} !</p>
+              <button id="logout" onClick={this.logOut}>LogOut</button>
+
+              
               <Todo 
                 tasks={this.state.tasks}
                 postTask={this.postTask} 
                 editTask={this.editTask} 
                 deleteTask={this.deleteTask}
+                myTasks={this.myTasks}
+                getTasks={this.getTasks}
+                
               />
               </span>
             : <div>

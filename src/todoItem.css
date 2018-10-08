@@ -1,13 +1,15 @@
 .item-container {
-    margin: 5px;
     width: 90%;
     padding: 10px 0px 10px 0px;
     display: inline-block;
     text-align: left;
     position: relative;
-    box-shadow: 0 2px 8px 0 #c9c9c9;
     background-color: white;
     font-weight: 300;
+}
+
+.item-container:hover{
+    background:#eee;
 }
 
 .completed-check-box {
@@ -56,9 +58,10 @@
     padding-left: 8px;
     color: #606060;
     position: relative;
+    /*
     top: 50%;
     left: 50%;
-    transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);*/
     outline-color: gray;
     font-size: 20px;
     font-weight: 300;

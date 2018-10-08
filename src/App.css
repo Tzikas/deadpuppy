@@ -1,7 +1,34 @@
 .App {
   text-align: center;
+  background-color: #282c34; 
+  min-height: 100vh;
+  
+}
+p{
+  color: white;
+  margin:0;
+  padding:20px;
 }
 
+button{
+   background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;  
+}
+
+#logout{
+  position:absolute;
+  top:2px;
+  right:2px;
+}
+/*.
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -30,7 +57,18 @@
     transform: rotate(360deg);
   }
 }
+*/
 
+#user{
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0;
+    padding: 15px;
+    color:white;
+    text-align:left;
+    background: #6db3bf;
+}
 
 .sweet-loading{
     position: fixed;
@@ -41,4 +79,10 @@
     left: 0;
     right: 0;
     z-index:2;
+}
+
+input{
+    padding: 10px 0;
+    width:50vw;
+    font-size: 20px;
 }

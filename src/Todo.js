@@ -17,7 +17,13 @@ class Todo extends Component {
         //console.log(this.props)    
         let items = this.props.tasks.map(item => (
                 <div key={item._id}>
-                    <TodoItem key={item._id} id={item._id} title={item.description}  doneyet={item.doneyet} editTask={this.props.editTask} deleteTask={this.props.deleteTask}/>
+                    <TodoItem 
+                        key={item._id} 
+                        id={item._id} 
+                        title={item.description}  
+                        doneyet={item.doneyet} 
+                        editTask={this.props.editTask} 
+                        deleteTask={this.props.deleteTask}/>
                 </div>
         ))
 
@@ -28,8 +34,7 @@ class Todo extends Component {
                     sup
                 </p>
                 <div className="row">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6">
+                    <div>
                     <form onSubmit={this.handleSubmit}>
                         <div>
                             <input
@@ -41,11 +46,15 @@ class Todo extends Component {
                                 placeholder="Add a todo..."/>
                         </div>
                     </form>
+              <br />
+              <br />
+              <button onClick ={this.props.myTasks}>My Tasks</button> 
+              <button onClick ={this.props.getTasks}>All Tasks</button> 
+
                     <div className="todo-container">
                         {items}
                     </div>
                     </div>
-                    <div className="col-md-3"></div>
                 </div>
             </div>
         )

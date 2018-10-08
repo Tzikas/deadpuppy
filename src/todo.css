@@ -8,12 +8,11 @@
 
 .input-title {
     padding: 15px 25px 15px 25px;
-    width: 100%;
+    width: 90%;
     font-size: 20px;
     font-weight: 300;
     color: #707070;
     border: 0;
-    box-shadow: 0 2px 8px 0 #d8d8d8;
     outline: none;
 }
 

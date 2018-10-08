@@ -69,7 +69,9 @@ class TodoItem extends Component {
         let val = this.input.value
         //console.log(this.props, val)
         this.props.editTask(this.props, val)
-
+        this.setState({
+            isEdit: !this.state.isEdit
+        })
     }
 
     renderTitle = () => {
