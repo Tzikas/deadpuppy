@@ -7,7 +7,7 @@
   height: 40vmin;
 }
 
-.App-header {
+.App {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -29,4 +29,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.sweet-loading{
+    position: fixed;
+    /* margin: auto; */
+    display: block;
+    top: 33%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index:2;
 }

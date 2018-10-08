@@ -32,43 +32,67 @@ class TodoItem extends Component {
     }
     */
 
-    handleCheck = () => {
-        this.props.editTask(
-            this.props.token, 
-            {
-                _id: this.props.id,
-                completed: !this.props.completed
-            }
-        )
+     edit = async (e) => {
+        ////console.log('this id',e, this)
+        
+        //let b = await this.props.editTask(this.props.id)
+        ////console.log('b', b)
+        //this.setState({ tasks: [...this.state.tasks, b.data] })                
 
         this.setState({
-            isEdit: false
+            isEdit: !this.state.isEdit
         })
     }
 
-    handleDelete = () => {
-        this.props.deleteItem(this.props.token, {_id: this.props.id})
+
+    handleCheck = (e) => {
+        //let val = this.input.value    
+        console.log(this)
+        console.log(this.props)
+        let task = {
+            id: this.props.id,
+            description: this.props.title,
+            doneyet : !this.props.doneyet
+        }
+
+        console.log(task)
+        //task.doneyet = !task.doneyet
+        this.props.editTask(task)
+
+
+    }
+
+    handleDelete = (e) => {
+        this.props.deleteTask(this.props)
+    }
+    handleEdit = (e) => {
+        let val = this.input.value
+        //console.log(this.props, val)
+        this.props.editTask(this.props, val)
+
     }
 
     renderTitle = () => {
+    //console.log(this)
+    
         return this.state.isEdit
             ?   <input
                     ref={input => this.input = input}
                     className="edit-title"
                     type="text"
                     defaultValue={this.props.title}
-                    onBlur={this.handleSubmitTitle}
+                    onBlur={this.handleEdit}
                     autoFocus
                 />
             :   <p 
-                    className={this.props.completed ? "title-crossed" : "title"}
-                    onDoubleClick={this.props.completed ? null : this.handleEditTitle}>
+                    className={this.props.doneyet ? "title-crossed" : "title"}
+                    onDoubleClick={this.props.doneyet ? null : this.edit}>
                         {this.props.title}
                 </p>
     }
 
     renderCheckIcon = () => {
-        return this.props.completed
+        return this.props.doneyet
             ? <i className="fas fa-check check-icon"></i>
             : null
     }

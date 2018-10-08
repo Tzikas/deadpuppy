@@ -1,39 +1,29 @@
 import React, { Component } from 'react';
 import './todo.css';
-//import { REACT_UNIVERSAL_REPO_URL } from '../../config';
+import axios from 'axios'
 
 import TodoItem from './TodoItem';
 
 class Todo extends Component {
-    
-    async componentDidMount() {
-        let tasks =  await this.props.getTasks();
-        console.log(tasks)
-        this.setState({tasks:tasks})
-    }
 
-    handleSubmit = async (e) => {
+    handleSubmit = async (e) => {        
         e.preventDefault();
-        let a = await this.props.postTask({description:Date.now()})
-        this.setState({ tasks: [...this.state.tasks, a.data] })                
-        //this.input.value = ''
+        let value = this.input.value;
+        this.props.postTask({description:value})
+        this.input.value = ''     
     }
-
-
+    
     render() {
-        console.log(this)
-        let items = [];
-        if(this.state){           
-            items = this.state.tasks.map(item => (
+        //console.log(this.props)    
+        let items = this.props.tasks.map(item => (
                 <div key={item._id}>
-                    <TodoItem id={item._id} title={item.description}  completed={item.completed} editTask={this.props.editTask}/>
+                    <TodoItem key={item._id} id={item._id} title={item.description}  doneyet={item.doneyet} editTask={this.props.editTask} deleteTask={this.props.deleteTask}/>
                 </div>
-            ))
-        }
+        ))
 
         return (
             <div>
-                <h1 class="site-header">Todos</h1>
+                <h1 className="site-header">Todos</h1>
                 <p className="app-description">
                     sup
                 </p>
@@ -52,7 +42,6 @@ class Todo extends Component {
                         </div>
                     </form>
                     <div className="todo-container">
-                        {/*this.renderTodos()*/}
                         {items}
                     </div>
                     </div>
